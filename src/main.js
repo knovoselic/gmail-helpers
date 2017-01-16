@@ -18,8 +18,7 @@ var main = function(){
         if (gmail.get.current_page() != 'label/Pending+reviews') return;
         var review_id_regex = /GLOWEB-\d+/;
 
-        if (!window.reviewButtonAdded) {
-            window.reviewButtonAdded = true;
+        if (gmail.dom.toolbar().find(':contains(Review)').length === 0) {
             gmail.tools.add_toolbar_button('Review', function() {
                 var openedReviews = [];
                 gmail.dom.inbox_content().find('div[role=checkbox][aria-checked=true]')
