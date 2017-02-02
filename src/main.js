@@ -9,6 +9,7 @@
 // @require      https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.4.4/randomColor.min.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/gmail-js/0.6.1/gmail.min.js
 // @grant        none
+// @noframe
 // ==/UserScript==
 
 var gmail;
@@ -64,6 +65,7 @@ var main = function(){
         });
     };
     window.addEventListener("hashchange", updateReviewView, false);
+    gmail.observe.on('new_email', updateReviewView);
     updateReviewView();
 };
 
