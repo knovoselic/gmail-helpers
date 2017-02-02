@@ -17,7 +17,7 @@ var main = function(){
     gmail = new Gmail();
     var updateReviewView = function() {
         if (gmail.get.current_page() != 'label/Pending+reviews') return;
-        var review_id_regex = /GLOWEB-\d+/;
+        var review_id_regex = /GLO\w+-\d+/;
 
         if (gmail.dom.toolbar().find(':contains(Review)').length === 0) {
             gmail.tools.add_toolbar_button('Review', function() {
