@@ -16,7 +16,7 @@ var gmail;
 var main = function(){
     gmail = new Gmail();
     var updateReviewView = function() {
-        if (gmail.get.current_page() != 'label/Pending+reviews') return;
+        if (gmail.get.current_page().indexOf('label/Pending+reviews') === -1) return;
         var review_id_regex = /GLO\w+-\d+/;
 
         if (gmail.dom.toolbar().find(':contains(Review)').length === 0) {
@@ -65,7 +65,8 @@ var main = function(){
         });
     };
     window.addEventListener("hashchange", updateReviewView, false);
-    gmail.observe.on('new_email', updateReviewView);
+    gmail.observe.on('refresh', updateReviewView);
+
     updateReviewView();
 };
 
