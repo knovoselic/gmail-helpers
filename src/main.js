@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Gmail helpers
-// @namespace    http://github.com/knovoselic/gmail-helpers
+// @namespace    https://github.com/knovoselic/gmail-helpers
 // @version      0.1
 // @description  Random helpers for Gmail
 // @author       Kristijan Novoselic
@@ -12,9 +12,13 @@
 // @noframe
 // ==/UserScript==
 
-var gmail;
 var main = function(){
-    gmail = new Gmail();
+    var gmail = new Gmail();
+    var hues = ["blue", "purple", "red", "yellow", "green", "pink", "monochrome"];
+    var colors = [];
+    for(var i = 0; i < 20; i++) {
+        colors.push(randomColor({hue: hues[i % hues.length], luminosity: 'light'}));
+    }
     var updateReviewView = function() {
         if (gmail.get.current_page().indexOf('label/Pending+reviews') === -1) return;
         var review_id_regex = /GLO\w+-\d+/;
@@ -34,17 +38,15 @@ var main = function(){
             }, 'T-I J-J5-Ji nX T-I-ax7 T-I-Js-Gs ar7 T-I-Zf-aw2');
         }
         var reviews = {};
-        var hues = ["blue", "purple", "red", "yellow", "green", "pink", "monochrome"];
-        var current_hue_index = -1;
+        var current_index = 0;
 
-        var titles = gmail.dom.inbox_content().find('tr td.xY.a4W span:not([class])');
+        var titles = gmail.dom.inbox_content().find('tr td.xY.a4W span.bog');
         titles.each(function(i, el) {
             var current_review = el.innerText.match(review_id_regex);
             if (current_review === null) return;
             current_review = current_review[0];
             if (Object.keys(reviews).indexOf(current_review) === -1) {
-                current_hue_index = (current_hue_index + 1) % hues.length;
-                reviews[current_review] = randomColor({hue: hues[current_hue_index], luminosity: 'light'});
+                reviews[current_review] = colors[current_index++];
             }
             $(el).parents("tr").find("td:nth-child(-n+3)").css('cssText', 'background-color: ' + reviews[current_review] + '!important');
             if (el.innerHTML.indexOf('review_hover') === -1) {
