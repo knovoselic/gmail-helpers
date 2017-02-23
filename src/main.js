@@ -27,7 +27,7 @@ var main = function(){
             gmail.tools.add_toolbar_button('Review', function() {
                 var openedReviews = [];
                 gmail.dom.inbox_content().find('div[role=checkbox][aria-checked=true]')
-                    .parents('tr').find('td.xY.a4W span:not([class])')
+                    .parents('tr').find('td.xY.a4W span.bog')
                     .each(function(el) {
                     var review_id = this.innerText.match(review_id_regex)[0];
                     if (openedReviews.indexOf(review_id) === -1) {
